@@ -2,7 +2,10 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<map>
+#include<unordered_map>
 using namespace std;
+typedef long long LL;
 
 class Solution {
     public: Solution(){}
@@ -60,6 +63,20 @@ class Solution {
         }
         return s;
     }
+
+    // 1577
+    int numTriplets_helper(vector<int>& a, vector<int>& b) {
+        int res = 0;
+        unordered_map<LL, int> hash;
+        for (int x: a) hash[(LL)x * x] ++;
+        for (int j = 0; j < b.size(); j++)
+            for (int k = j + 1; k < b.size(); k++)
+                res += hash[(LL)b[j] * b[k]];
+        return res;
+    }
+    int numTriplets(vector<int>& nums1, vector<int>& nums2) {
+        return numTriplets_helper(nums1, nums2) + numTriplets_helper(nums2, nums1);
+    }
 };
 
 void test_66(){
@@ -85,10 +102,20 @@ void test_1576(){
     string ans = m_solution.modifyString(s);
     cout<<ans<<endl;
 }
+
+void test_1577(){
+    Solution m_solution;
+    vector<int> nums1 = {1,1};
+    vector<int> nums2 = {1,1,1};
+    int ans = m_solution.numTriplets(nums1, nums2);
+    cout<<ans<<endl;
+}
+
 int main(){
     cout<<"hello leetcode"<<endl;
     // test_66();
     // test_67();
-    test_1576();
+    // test_1576();
+    test_1577();
     return 0;
 }
