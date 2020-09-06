@@ -49,6 +49,17 @@ class Solution {
         reverse(ans.begin(), ans.end());
         return ans;
     }
+
+    //  1576
+    string modifyString(string s) {
+        for (int i = 0; i < s.size(); i++){
+            if (s[i] != '?')    continue;
+            char c = 'a';
+            while(i && s[i - 1] == c || i + 1 < s.size() && s[i + 1] == c) c++;
+            s[i] = c;
+        }
+        return s;
+    }
 };
 
 void test_66(){
@@ -67,9 +78,17 @@ void test_67(){
     string ans = m_solution.addBinary(a,b);
     cout<<ans<<endl;
 }
+
+void test_1576(){
+    Solution m_solution;
+    string s = "??yw?ipkj?";
+    string ans = m_solution.modifyString(s);
+    cout<<ans<<endl;
+}
 int main(){
     cout<<"hello leetcode"<<endl;
     // test_66();
-    test_67();
+    // test_67();
+    test_1576();
     return 0;
 }
