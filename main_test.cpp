@@ -6,6 +6,7 @@
 #include<unordered_map>
 using namespace std;
 typedef long long LL;
+const int INF = 1e9;
 
 class Solution {
     public: Solution(){}
@@ -77,6 +78,23 @@ class Solution {
     int numTriplets(vector<int>& nums1, vector<int>& nums2) {
         return numTriplets_helper(nums1, nums2) + numTriplets_helper(nums2, nums1);
     }
+
+    // 1578 dp
+    int minCost(string s, vector<int>& cost) {
+        int n = cost.size();
+        vector<vector<int>> f(n, vector<int>(27, INF));
+        f[0][s[0] - 'a'] = 0, f[0][26] = cost[0];
+        for (int i = 1; i < n; i++){
+            for (int j = 0; j < 27; j++) f[i][j] = f[i - 1][j] + cost[i];
+            int j = s[i] - 'a';
+            for (int k = 0; k < 27; k++)
+                if (k != j)
+                    f[i][j] = min(f[i][j], f[i -1][k]);
+        }
+        int res = INF;
+        for (int i = 0; i < 27; i++) res = min(res, f[n - 1][i]);
+        return res;
+    }
 };
 
 void test_66(){
@@ -111,11 +129,20 @@ void test_1577(){
     cout<<ans<<endl;
 }
 
+void test_1578(){
+    Solution m_solution;
+    string s = "aabaa";
+    vector<int> cost = {1,2,3,4,1};
+    int ans = m_solution.minCost(s, cost);
+    cout<<ans<<endl;
+}
+
 int main(){
     cout<<"hello leetcode"<<endl;
     // test_66();
     // test_67();
     // test_1576();
-    test_1577();
+    // test_1577();
+    test_1578();
     return 0;
 }
