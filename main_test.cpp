@@ -1,3 +1,4 @@
+#include "common/struct.h"
 #include<cstdio>
 #include<iostream>
 #include<vector>
@@ -52,6 +53,17 @@ class Solution {
         }
         reverse(ans.begin(), ans.end());
         return ans;
+    }
+
+    // 83
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode* curNode = head;
+        if (head == nullptr) return nullptr;
+        while(curNode->next != nullptr){
+            if (curNode->next->val == curNode->val) curNode->next = curNode->next->next;
+            else  curNode = curNode->next;
+        }
+        return head;
     }
 
     //  1576
@@ -114,6 +126,23 @@ void test_67(){
     cout<<ans<<endl;
 }
 
+void test_83(){
+    Solution m_solution;
+    ListNode head = ListNode(1);
+    ListNode node = ListNode(1);
+    ListNode node2 = ListNode(3);
+    ListNode node3 = ListNode(3);
+    head.next = &node;
+    head.next->next = &node2;
+    head.next->next->next = &node3;
+    ListNode* ans = m_solution.deleteDuplicates(&head);
+    while(ans->next != nullptr){
+        cout<<ans->val<<" ";
+        ans = ans->next;
+    }
+    cout<<ans->val;
+}
+
 void test_1576(){
     Solution m_solution;
     string s = "??yw?ipkj?";
@@ -141,8 +170,9 @@ int main(){
     cout<<"hello leetcode"<<endl;
     // test_66();
     // test_67();
+    test_83();
     // test_1576();
     // test_1577();
-    test_1578();
+    // test_1578();
     return 0;
 }
