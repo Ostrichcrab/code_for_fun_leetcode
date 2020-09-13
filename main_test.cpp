@@ -107,6 +107,33 @@ class Solution {
         for (int i = 0; i < 27; i++) res = min(res, f[n - 1][i]);
         return res;
     }
+
+    // 1582 暴力遍历+一点点剪枝
+    int numSpecial(vector<vector<int>>& mat) {
+        int n = mat.size();
+        int m = mat[0].size();
+        int ans = 0;
+        for(int i = 0; i < n; i++){ 
+            for(int j = 0; j < m; j++){
+                if(mat[i][j] == 0) continue;
+                int flag = 0;
+                for(int k = 0; k < n; k++){
+                    if(k==i) continue;
+                    if(mat[k][j] == 1){
+                        flag=1;break;
+                        }
+                }
+                for(int k = 0; k < m; k++){
+                    if(k==j) continue;
+                    if(mat[i][k] == 1){
+                        flag=1;break;
+                        }
+                }
+                if(!flag) ans++;
+            }
+        }
+        return ans;
+    }
 };
 
 void test_66(){
@@ -166,13 +193,21 @@ void test_1578(){
     cout<<ans<<endl;
 }
 
+void test_1582(){
+    Solution m_solution;
+    vector<vector<int>> mat = {{1,0,0},{0,1,0},{1,0,0}};
+    int ans = m_solution.numSpecial(mat);
+    cout<<ans<<endl;
+}
+
 int main(){
     cout<<"hello leetcode"<<endl;
     // test_66();
     // test_67();
-    test_83();
+    // test_83();
     // test_1576();
     // test_1577();
     // test_1578();
+    test_1582();
     return 0;
 }
