@@ -8,6 +8,11 @@
 using namespace std;
 typedef long long LL;
 const int INF = 1e9;
+const int N = 1001;
+// pirme minSpanTree
+int mpt[N][N]; // 原图对应矩阵
+int dis[N]; // 最近的距离
+int cls[N]; // 最近点编号
 
 class Solution {
     public: Solution(){}
@@ -134,6 +139,42 @@ class Solution {
         }
         return ans;
     }
+
+    // 1584 prime minSpanTree
+     int prime(int s, int n ){
+        int ans = 0;
+        for(int j = 1; j <= n; j++){
+            cls[j] = s;
+            dis[j] = mpt[s][j];
+        }
+        dis[s] = -1;
+        for(int i = 1; i < n; i++){
+            int Min = INF, k;
+            for(int j = 1; j <= n; j++)
+                if(dis[j]!=-1 && dis[j]<Min){
+                    Min = dis[k=j];
+                }
+                ans += dis[k];
+                dis[k] = -1;
+                for(int j = 1; j <= n; j++)
+                    if(dis[j]!=-1 && mpt[k][j] < dis[j]){
+                        dis[j] = mpt[k][j];
+                        cls[j] = k;
+                    }
+        }
+        return ans;
+    }
+    int minCostConnectPoints(vector<vector<int>>& points) {
+        int n = points.size();
+        for( int i = 0; i < n; i++)
+            for(int j = 0; j < n; j++){
+                int x1 = points[i][0], y1 = points[i][1];
+                int x2 = points[j][0], y2 = points[j][1];
+                mpt[i+1][j+1] = mpt[j+1][i+1] = abs(x1 - x2) + abs(y1 - y2);
+            }
+        int ans = prime(1, n);
+        return ans;
+    }
 };
 
 void test_66(){
@@ -200,6 +241,13 @@ void test_1582(){
     cout<<ans<<endl;
 }
 
+void test_1584(){
+    Solution m_solution;
+    vector<vector<int>> points = {{3,12},{-2,5},{-4,1}};
+    int ans = m_solution.minCostConnectPoints(points);
+    cout<<ans<<endl;
+}
+
 int main(){
     cout<<"hello leetcode"<<endl;
     // test_66();
@@ -208,6 +256,7 @@ int main(){
     // test_1576();
     // test_1577();
     // test_1578();
-    test_1582();
+    // test_1582();
+    test_1584();
     return 0;
 }
