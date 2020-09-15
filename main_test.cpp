@@ -9,6 +9,7 @@ using namespace std;
 typedef long long LL;
 const int INF = 1e9;
 const int N = 1001;
+const int MOD = 1e9 + 7;
 // pirme minSpanTree
 int mpt[N][N]; // 原图对应矩阵
 int dis[N]; // 最近的距离
@@ -69,6 +70,24 @@ class Solution {
             else  curNode = curNode->next;
         }
         return head;
+    }
+
+    // 1573 组合数学 插板法
+    int numWays(string s) {
+        int n = s.size(), ones = 0;
+        for(int i = 0; i < n; i++){
+            if(s[i] == '1') ones++;
+        }
+        if (ones%3 != 0) return 0;
+        if (ones == 0) return (LL)(n-1)*(n-2)/2%MOD;
+        int cnt = 0, l1 = 0, l2 = 0;
+        ones /= 3;
+        for(int i = 0; i < n; i++){
+            if(s[i] == '1') cnt++;
+            if(cnt == ones) l1++;
+            if(cnt == 2 * ones) l2++;
+        }
+        return (LL)l1*l2%MOD;
     }
 
     //  1576
@@ -211,6 +230,13 @@ void test_83(){
     cout<<ans->val;
 }
 
+void test_1573(){
+    Solution m_solution;
+    string s = "10101";
+    int ans = m_solution.numWays(s);
+    cout<<ans<<endl;
+}
+
 void test_1576(){
     Solution m_solution;
     string s = "??yw?ipkj?";
@@ -253,10 +279,11 @@ int main(){
     // test_66();
     // test_67();
     // test_83();
+    test_1573();
     // test_1576();
     // test_1577();
     // test_1578();
     // test_1582();
-    test_1584();
+    // test_1584();
     return 0;
 }
