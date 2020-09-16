@@ -90,6 +90,22 @@ class Solution {
         return (LL)l1*l2%MOD;
     }
 
+    // 1574 前缀、后缀、滑动窗口
+     int findLengthOfShortestSubarray(vector<int>& arr) {
+        int n = arr.size();
+        int j = n - 1;
+        // 处理后缀
+        while (j > 0 && arr[j - 1] <= arr[j]) j--;
+        int ans = n - j;
+        // 遍历前缀终点
+        for (int i = 0; i < n; i++){
+            if (i && arr[i] < arr[i - 1]) break;
+            while (j <= i || (j < n && arr[i] > arr[j])) j++;
+            ans = max(ans, i + n - j + 1);
+        }
+        return n - ans;
+    }
+
     //  1576
     string modifyString(string s) {
         for (int i = 0; i < s.size(); i++){
@@ -237,6 +253,13 @@ void test_1573(){
     cout<<ans<<endl;
 }
 
+void test_1574(){
+    Solution m_solution;
+    vector<int> arr = {1,2,3,10,4,2,3,5};
+    int ans = m_solution.findLengthOfShortestSubarray(arr);
+    cout<<ans<<endl;
+}
+
 void test_1576(){
     Solution m_solution;
     string s = "??yw?ipkj?";
@@ -279,7 +302,8 @@ int main(){
     // test_66();
     // test_67();
     // test_83();
-    test_1573();
+    // test_1573();
+    test_1574();
     // test_1576();
     // test_1577();
     // test_1578();
