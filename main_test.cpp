@@ -72,6 +72,27 @@ class Solution {
         return head;
     }
 
+    // 86
+    ListNode* partition(ListNode* head, int x) {
+        ListNode *before = new ListNode(0);
+        ListNode *after = new ListNode(0);
+        ListNode *pa = before;
+        ListNode *pb = after;
+        for(ListNode *p = head; p; p = p->next){
+            if (p->val < x){
+                pa->next = p;
+                pa = pa->next;
+            }
+            if (p->val >= x){
+                pb->next = p;
+                pb = pb->next;
+            }
+        }
+        pa->next = after->next;
+        pb->next = nullptr;
+        return before->next;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -246,6 +267,24 @@ void test_83(){
     cout<<ans->val;
 }
 
+void test_86(){
+    Solution m_solution;
+    ListNode *head = new ListNode(0);
+    ListNode *t = head;
+    t->next = new ListNode(1); t = t->next;
+    t->next = new ListNode(4); t = t->next;
+    t->next = new ListNode(3); t = t->next;
+    t->next = new ListNode(2); t = t->next;
+    t->next = new ListNode(5); t = t->next;
+    t->next = new ListNode(2); t = t->next;
+    ListNode *ans = m_solution.partition(head->next, 3);
+    while(ans->next != nullptr){
+        cout<<ans->val<<" ";
+        ans = ans->next;
+    }
+    cout<<ans->val;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -302,8 +341,9 @@ int main(){
     // test_66();
     // test_67();
     // test_83();
+    test_86();
     // test_1573();
-    test_1574();
+    // test_1574();
     // test_1576();
     // test_1577();
     // test_1578();
