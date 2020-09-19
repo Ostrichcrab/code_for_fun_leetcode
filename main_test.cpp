@@ -17,6 +17,31 @@ int cls[N]; // ×î½üµã±àºÅ
 
 class Solution {
     public: Solution(){}
+
+    // 57
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        vector<vector<int>> ans;
+        bool has_in = false;
+        for(auto item : intervals){
+            if (item[1] < newInterval[0]) ans.push_back(item);
+            else if (item[0] > newInterval[1]){
+                if(!has_in) {
+                    ans.push_back(newInterval);
+                    has_in = true;
+                }
+                ans.push_back(item);
+            } 
+            else{
+                newInterval[0] = min(item[0], newInterval[0]);
+                newInterval[1] = max(item[1], newInterval[1]);
+            }
+        }
+        if (!has_in){
+            ans.push_back(newInterval);
+        }  
+        return ans;
+    }
+
     // 66
     vector<int> plusOne(vector<int>& digits) {
         int n = digits.size();
@@ -233,6 +258,16 @@ class Solution {
     }
 };
 
+void test_57(){
+    Solution m_solution;
+    vector<vector<int>> intervals = {{1,3}, {6,9}};
+    vector<int> newInterval = {2,5};
+    vector<vector<int>> ans = m_solution.insert(intervals, newInterval);
+    for(int i = 0; i < ans.size(); i++){
+        cout<<ans[i][0]<<" "<<ans[i][1]<<endl;
+    }
+}
+
 void test_66(){
     Solution m_solution;
     vector<int> digits = {9,9};
@@ -338,10 +373,11 @@ void test_1584(){
 
 int main(){
     cout<<"hello leetcode"<<endl;
+    test_57();
     // test_66();
     // test_67();
     // test_83();
-    test_86();
+    // test_86();
     // test_1573();
     // test_1574();
     // test_1576();
