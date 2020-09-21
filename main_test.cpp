@@ -42,6 +42,26 @@ class Solution {
         return ans;
     }
 
+    // 63
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int m = obstacleGrid.size();
+        if (m == 0) return 0;
+        int n = obstacleGrid[0].size();
+        if (n == 0) return 0;
+        LL dp[101][101] = {0};
+        dp[0][0] = 1 - obstacleGrid[0][0];
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(obstacleGrid[i][j] == 1) dp[i][j] = 0;
+                else{
+                    if(i > 0) dp[i][j] += dp[i-1][j];
+                    if(j > 0) dp[i][j] += dp[i][j-1];
+                }
+            }
+        }
+        return dp[m-1][n-1];
+    }
+
     // 66
     vector<int> plusOne(vector<int>& digits) {
         int n = digits.size();
@@ -268,6 +288,14 @@ void test_57(){
     }
 }
 
+void test_63(){
+    Solution m_solution;
+    // vector<vector<int> > obstacleGrid = {{0,0,0},{0,1,0},{0,0,0}};
+    vector<vector<int> > obstacleGrid = {{0,0,0}};
+    int ans = m_solution.uniquePathsWithObstacles(obstacleGrid);
+    cout<<ans<<endl;
+}
+
 void test_66(){
     Solution m_solution;
     vector<int> digits = {9,9};
@@ -373,7 +401,8 @@ void test_1584(){
 
 int main(){
     cout<<"hello leetcode"<<endl;
-    test_57();
+    // test_57();
+    test_63();
     // test_66();
     // test_67();
     // test_83();
