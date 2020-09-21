@@ -106,6 +106,50 @@ class Solution {
         return ans;
     }
 
+    // 73
+    void setZeroes(vector<vector<int>>& matrix) {
+        if(matrix.empty()) return ;
+        int n = matrix.size();
+        int m = matrix[0].size();
+        int col0 = 1, row0 = 1;
+        for(int i = 0; i < n; i++)
+            if(!matrix[i][0]) col0 = 0;
+        for(int j = 0; j < m; j++)
+            if(!matrix[0][j]) row0 = 0;
+        for(int i = 1; i < n; i++){
+            for(int j = 1; j < m; j++){
+                if(!matrix[i][j]){
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        for(int i = 1; i < n; i++){
+            if(!matrix[i][0]){
+                for(int j = 1; j < m; j++){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        for(int i = 1; i < m; i++){
+            if(!matrix[0][i]){
+                for(int j = 1; j < n; j++){
+                    matrix[j][i] = 0;
+                }
+            }
+        }
+        if(!col0){
+            for(int i = 0; i < n; i++){
+                matrix[i][0] = 0;
+            }
+        }
+        if(!row0){
+            for(int i = 0; i < m; i++){
+                matrix[0][i] = 0;
+            }
+        }
+    }
+
     // 83
     ListNode* deleteDuplicates(ListNode* head) {
         ListNode* curNode = head;
@@ -313,6 +357,18 @@ void test_67(){
     cout<<ans<<endl;
 }
 
+void test_73(){
+    Solution m_solution;
+    vector<vector<int>> matrix = {{1,1,1},{1,0,1},{1,1,1}};
+    m_solution.setZeroes(matrix);
+    for(int i = 0; i < matrix.size(); i++){
+        for(int j = 0; j < matrix[0].size(); j++){
+            cout<<matrix[i][j];
+        }
+        cout<<endl;
+    }
+}
+
 void test_83(){
     Solution m_solution;
     ListNode head = ListNode(1);
@@ -402,9 +458,10 @@ void test_1584(){
 int main(){
     cout<<"hello leetcode"<<endl;
     // test_57();
-    test_63();
+    // test_63();
     // test_66();
     // test_67();
+    test_73();
     // test_83();
     // test_86();
     // test_1573();
