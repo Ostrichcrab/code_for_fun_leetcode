@@ -225,6 +225,21 @@ class Solution {
         return ans;
     }
 
+    // 119
+    vector<int> getRow(int rowIndex) {
+        vector<int> last(rowIndex + 1), now(rowIndex + 1);
+        last[0] = 1;
+        for(int i = 0; i < rowIndex; i++){
+            now[0] = 1;
+            for(int j = 0; j + 1 <= i; j++){
+                now[j + 1] = last[j] + last[j + 1];
+            }
+            now[i + 1] = last[i];
+            last = now;
+        }
+        return last;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -472,6 +487,15 @@ void test_118(){
     }
 }
 
+void test_119(){
+    Solution m_solution;
+    vector<int> ans = m_solution.getRow(4);
+    for(int i = 0; i < ans.size(); i++){
+        cout<<ans[i]<<" ";
+    }
+    cout<<endl;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -534,7 +558,8 @@ int main(){
     // test_81();
     // test_83();
     // test_86();
-    test_118();
+    // test_118();
+    test_119();
     // test_1573();
     // test_1574();
     // test_1576();
