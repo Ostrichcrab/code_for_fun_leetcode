@@ -165,6 +165,16 @@ class Solution {
         return matrix[r/m][r%m] == target;
     }
 
+    // 81
+    bool search(vector<int>& nums, int target) {
+        for(auto item : nums){
+            if(item == target){
+                return true;
+            }
+        }
+        return false;
+    }
+
     // 83
     ListNode* deleteDuplicates(ListNode* head) {
         ListNode* curNode = head;
@@ -391,6 +401,13 @@ void test_74(){
     cout<<ans;
 }
 
+void test_81(){
+    Solution m_solution;
+    vector<int> nums = {2,5,6,0,0,1,2};
+    bool ans = m_solution.search(nums, 22);
+    cout<<ans;
+}
+
 void test_83(){
     Solution m_solution;
     ListNode head = ListNode(1);
@@ -484,7 +501,8 @@ int main(){
     // test_66();
     // test_67();
     // test_73();
-    test_74();
+    // test_74();
+    test_81();
     // test_83();
     // test_86();
     // test_1573();
