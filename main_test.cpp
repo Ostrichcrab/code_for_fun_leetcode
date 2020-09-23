@@ -240,6 +240,16 @@ class Solution {
         return last;
     }
 
+    // 120 
+    int minimumTotal(vector<vector<int>>& triangle) {
+        for(int i = triangle.size() - 2; i >= 0; i--){
+            for(int j = 0; j < i + 1; j++ ){
+                triangle[i][j] += min(triangle[i+1][j], triangle[i+1][j+1]);
+            }
+        }
+        return triangle[0][0];
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -496,6 +506,13 @@ void test_119(){
     cout<<endl;
 }
 
+void test_120(){
+    Solution m_solution;
+    vector<vector<int>> triangle = {{2},{3,4},{6,5,7},{4,1,8,3}};
+    int ans = m_solution.minimumTotal(triangle);
+    cout<<ans;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -559,7 +576,8 @@ int main(){
     // test_83();
     // test_86();
     // test_118();
-    test_119();
+    // test_119();
+    test_120();
     // test_1573();
     // test_1574();
     // test_1576();
