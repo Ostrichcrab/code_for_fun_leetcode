@@ -5,6 +5,7 @@
 #include<algorithm>
 #include<map>
 #include<unordered_map>
+#include<limits.h>
 using namespace std;
 typedef long long LL;
 const int INF = 1e9;
@@ -248,6 +249,39 @@ class Solution {
             }
         }
         return triangle[0][0];
+    }
+
+    // 152 除去0以外，子串随着长度，其乘积绝对值递增。
+    int maxProduct(vector<int>& nums) {
+        int pos = 0, neg = 0;
+        int res =  INT_MIN;
+        for(auto x : nums){
+            if(x > 0){
+                if (pos > 0){
+                    pos *= x;
+                }
+                else{
+                    pos = x;
+                }
+                neg *= x;
+            }
+            else if(x < 0){
+                int ng = neg;
+                if(pos > 0){
+                    neg = pos * x;
+                }
+                else{
+                    neg = x;
+                }
+                pos = ng * x;
+            }
+            else{
+                pos = neg = 0;
+            }
+            res = max(res, x);
+            if(pos != 0) res = max(res, pos);
+        }
+        return res;
     }
 
     // 1573 组合数学 插板法
@@ -513,6 +547,14 @@ void test_120(){
     cout<<ans;
 }
 
+void test_152(){
+    Solution m_solution;
+    // vector<int> nums = {2,3,-1,4};
+    vector<int> nums = {1,2,-1,-2,2,1,-2,1,4,-5,4};
+    int ans = m_solution.maxProduct(nums);
+    cout<<ans;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -577,7 +619,8 @@ int main(){
     // test_86();
     // test_118();
     // test_119();
-    test_120();
+    // test_120();
+    test_152();
     // test_1573();
     // test_1574();
     // test_1576();
