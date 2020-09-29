@@ -284,6 +284,19 @@ class Solution {
         return res;
     }
 
+    // 167
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        for(int i = 0, j = numbers.size()-1; i < j; i++){
+            while (numbers[i] + numbers[j] > target) j--;
+            if(numbers[i] + numbers[j] == target){
+                vector<int> res;
+                res.push_back(i + 1), res.push_back(j + 1);
+                return res;
+            }
+        }
+        return {};
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -555,6 +568,15 @@ void test_152(){
     cout<<ans;
 }
 
+void test_167(){
+    Solution m_solution;
+    vector<int> numbers = {2,7,11,15};
+    vector<int> ans = m_solution.twoSum(numbers, 29);
+    for(auto i : ans){
+        cout<<i<<" ";
+    }
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -620,7 +642,8 @@ int main(){
     // test_118();
     // test_119();
     // test_120();
-    test_152();
+    // test_152();
+    test_167();
     // test_1573();
     // test_1574();
     // test_1576();
