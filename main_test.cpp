@@ -308,6 +308,15 @@ class Solution {
         return candidate;
     }
 
+    // 189
+    void rotate(vector<int>& nums, int k) {
+        k %= nums.size();
+        reverse(nums.begin(), nums.end());
+        reverse(nums.begin(), nums.begin()+k);
+        reverse(nums.begin()+k, nums.end());
+        return ;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -595,6 +604,15 @@ void test_169(){
     cout<<ans;
 }
 
+void test_189(){
+    Solution m_solution;
+    vector<int> nums = {1,2,3,4,5,6,7};
+    m_solution.rotate(nums, 3);
+    for(auto i : nums){
+        cout<<i<<" ";
+    }
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -662,7 +680,8 @@ int main(){
     // test_120();
     // test_152();
     // test_167();
-    test_169();
+    // test_169();
+    test_189();
     // test_1573();
     // test_1574();
     // test_1576();
