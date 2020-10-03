@@ -297,6 +297,17 @@ class Solution {
         return {};
     }
 
+    // 169
+    int majorityElement(vector<int>& nums) {
+        int cnt = 0, candidate;
+        for(int i = 0; i < nums.size(); i++){
+            if (cnt == 0) candidate = nums[i];
+            if(candidate == nums[i]) cnt++;
+            else cnt--;
+        }
+        return candidate;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -577,6 +588,13 @@ void test_167(){
     }
 }
 
+void test_169(){
+    Solution m_sulution;
+    vector<int> nums = {2,2,1,1,1,2,2};
+    int ans = m_sulution.majorityElement(nums);
+    cout<<ans;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -643,7 +661,8 @@ int main(){
     // test_119();
     // test_120();
     // test_152();
-    test_167();
+    // test_167();
+    test_169();
     // test_1573();
     // test_1574();
     // test_1576();
