@@ -317,6 +317,25 @@ class Solution {
         return ;
     }
 
+    // 209
+    int minSubArrayLen(int s, vector<int>& nums) {
+        int n = nums.size();
+        int ans = n + 1;
+        int cur = 0;
+        for(int i = 0, j = 0; i < n; i++){
+            cur += nums[i];
+            while(j <= i && cur >= s){
+                cur -= nums[j];
+                j++;
+            }
+            if ( j > 0){
+                ans = min(ans, i - j + 2);
+            }
+        }
+        ans = ans==n+1? 0 : ans;
+        return ans;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -613,6 +632,14 @@ void test_189(){
     }
 }
 
+void test_209(){
+    Solution m_solution;
+    // vector<int> nums = {2,3,1,2,4,3};
+    vector<int> nums = {};
+    int ans = m_solution.minSubArrayLen(7, nums);
+    cout<<ans;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -681,7 +708,8 @@ int main(){
     // test_152();
     // test_167();
     // test_169();
-    test_189();
+    // test_189();
+    test_209();
     // test_1573();
     // test_1574();
     // test_1576();
