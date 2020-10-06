@@ -298,7 +298,7 @@ class Solution {
     }
 
     // 169
-    int majorityElement(vector<int>& nums) {
+    int majorityElement_V1(vector<int>& nums) {
         int cnt = 0, candidate;
         for(int i = 0; i < nums.size(); i++){
             if (cnt == 0) candidate = nums[i];
@@ -333,6 +333,42 @@ class Solution {
             }
         }
         ans = ans==n+1? 0 : ans;
+        return ans;
+    }
+
+    // 229
+    vector<int> majorityElement(vector<int>& nums) {
+        vector<int> ans;
+        int n = nums.size();
+        int candidata1 = 0, candidata2 = 0;
+        int count1 = 0, count2 = 0;
+        for(auto i : nums){
+            if(candidata1 == i){
+                count1 ++;
+            }
+            else if(candidata2 == i){
+                count2 ++;
+            }
+            else if(count1 == 0){
+                candidata1 = i;
+                count1 ++;
+            }
+            else if(count2 == 0){
+                candidata2 = i;
+                count2 ++;
+            }
+            else{
+                count1 --;
+                count2 --;
+            }
+        }
+        count1 = 0, count2 = 0;
+        for(auto i : nums){
+            if(i == candidata1) count1 ++;
+            else if( i == candidata2) count2 ++;
+        }
+        if(count1 > n / 3) ans.push_back(candidata1);
+        if(count2 > n / 3) ans.push_back(candidata2);
         return ans;
     }
 
@@ -619,7 +655,7 @@ void test_167(){
 void test_169(){
     Solution m_sulution;
     vector<int> nums = {2,2,1,1,1,2,2};
-    int ans = m_sulution.majorityElement(nums);
+    int ans = m_sulution.majorityElement_V1(nums);
     cout<<ans;
 }
 
@@ -638,6 +674,15 @@ void test_209(){
     vector<int> nums = {};
     int ans = m_solution.minSubArrayLen(7, nums);
     cout<<ans;
+}
+
+void test_229(){
+    Solution m_solution;
+    vector<int> nums = {3,2,3};
+    vector<int> ans = m_solution.majorityElement(nums);
+    for(auto i : ans){
+        cout<<i<<" ";
+    }
 }
 
 void test_1573(){
@@ -709,7 +754,8 @@ int main(){
     // test_167();
     // test_169();
     // test_189();
-    test_209();
+    // test_209();
+    test_229();
     // test_1573();
     // test_1574();
     // test_1576();
