@@ -372,6 +372,21 @@ class Solution {
         return ans;
     }
 
+    // 238
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> output(n, 1);
+        for(int i = 1; i < n; i++){
+            output[i] = output[i-1] * nums[i-1];
+        }
+        int end = 1;
+        for(int i = n-1; i >= 0; i--){
+            output[i] *= end;
+            end *= nums[i];
+        }
+        return output;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -685,6 +700,15 @@ void test_229(){
     }
 }
 
+void test_238(){
+    Solution m_solution;
+    vector<int> nums = {1,2,3,4};
+    vector<int> ans = m_solution.productExceptSelf(nums);
+    for(auto i : ans){
+        cout<<i<<" ";
+    }
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -755,7 +779,8 @@ int main(){
     // test_169();
     // test_189();
     // test_209();
-    test_229();
+    // test_229();
+    test_238();
     // test_1573();
     // test_1574();
     // test_1576();
