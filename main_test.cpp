@@ -387,6 +387,20 @@ class Solution {
         return output;
     }
 
+    // 283
+    void moveZeroes(vector<int>& nums) {
+        int j = 0;
+        for(int i = 0; i < nums.size(); i++){
+            if(nums[i] != 0){
+                nums[j++] = nums[i];
+            }
+        }
+        for(int i = j; i < nums.size(); i++){
+            nums[i] = 0;
+        }
+        return ;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -709,6 +723,15 @@ void test_238(){
     }
 }
 
+void test_283(){
+    Solution m_solution;
+    vector<int> nums = {0,1,0,3,12};
+    m_solution.moveZeroes(nums);
+    for(auto i : nums){
+        cout<<i<<" ";
+    }
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -780,7 +803,8 @@ int main(){
     // test_189();
     // test_209();
     // test_229();
-    test_238();
+    // test_238();
+    test_283();
     // test_1573();
     // test_1574();
     // test_1576();
