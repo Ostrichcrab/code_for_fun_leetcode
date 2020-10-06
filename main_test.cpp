@@ -414,6 +414,48 @@ class Solution {
         return r;
     }
 
+    // 289
+     void gameOfLife(vector<vector<int>>& board) {
+        int m = board.size();
+        if (m == 0) return ;
+        int n = board[0].size();
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                int neighbour = 0;
+                for(int di = -1; di <= 1; di++){
+                    for(int dj = -1; dj <= 1; dj++){
+                        if(i + di >= 0 && i + di < m &&
+                           j + dj >= 0 && j + dj < n &&
+                           !(di == 0 && dj == 0)){
+                               neighbour += board[i+di][j+dj] & 1;
+                           }
+                    }
+                }
+                if(board[i][j] == 1){
+                    if(neighbour < 2 || neighbour > 3){
+                        board[i][j] = 1;
+                    }
+                    else{
+                        board[i][j] = 3;
+                    }
+                }
+                else{
+                    if(neighbour == 3){
+                        board[i][j] = 2;
+                    }
+                    else{
+                        board[i][j] = 0;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                board[i][j] = (board[i][j] & 2) >> 1;
+            }
+        }
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -752,6 +794,19 @@ void test_287(){
     cout<<ans;
 }
 
+void test_289(){
+    Solution m_solution;
+    vector<vector<int>> board = {{0,1,0},{0,0,1},{1,1,1},{0,0,0}};
+    m_solution.gameOfLife(board);
+    int m = board.size(), n = board[0].size();
+    for(int i = 0; i < m; i++){
+        for(int j = 0; j < n; j++){
+            cout<<board[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -825,7 +880,8 @@ int main(){
     // test_229();
     // test_238();
     // test_283();
-    test_287();
+    // test_287();
+    test_289();
     // test_1573();
     // test_1574();
     // test_1576();
