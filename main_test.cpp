@@ -470,6 +470,22 @@ class Solution {
         return ans;
     }
 
+    // 448
+    vector<int> findDisappearedNumbers(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ans;
+        for(int i = 0; i < n; i++){
+            int pos = abs(nums[i]) - 1;
+            if(nums[pos] > 0) nums[pos] = -nums[pos];
+        }
+        for(int i = 0; i < n; i++){
+            if(nums[i] > 0){
+                ans.push_back(i + 1);
+            }
+        }
+        return ans;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -830,6 +846,15 @@ void test_442(){
     }
 }
 
+void test_448(){
+    Solution m_solution;
+    vector<int> nums = {4,3,2,7,8,2,3,1};
+    vector<int> ans = m_solution.findDisappearedNumbers(nums);
+    for(auto i : ans){
+        cout<<i<<" ";
+    }
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -905,7 +930,8 @@ int main(){
     // test_283();
     // test_287();
     // test_289();
-    test_442();
+    // test_442();
+    test_448();
     // test_1573();
     // test_1574();
     // test_1576();
