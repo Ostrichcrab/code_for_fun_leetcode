@@ -456,6 +456,20 @@ class Solution {
         }
     }
 
+    // 442
+    vector<int> findDuplicates(vector<int>& nums) {
+        vector<int> ans;
+        int n = nums.size();
+        for(int i = 0; i < n; i++){
+            int pos = abs(nums[i]) - 1;
+            nums[pos] = -nums[pos];
+            if(nums[pos] > 0){
+                ans.push_back(pos + 1);
+            }
+        }
+        return ans;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -807,6 +821,15 @@ void test_289(){
     }
 }
 
+void test_442(){
+    Solution m_solution;
+    vector<int> nums = {4,2,1,3,3,2,7,8};
+    vector<int> ans = m_solution.findDuplicates(nums);
+    for(auto i : ans){
+        cout<<i<<" ";
+    }
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -881,7 +904,8 @@ int main(){
     // test_238();
     // test_283();
     // test_287();
-    test_289();
+    // test_289();
+    test_442();
     // test_1573();
     // test_1574();
     // test_1576();
