@@ -486,6 +486,19 @@ class Solution {
         return ans;
     }
 
+    // 560 前缀和
+    int subarraySum(vector<int>& nums, int k) {
+        unordered_map<int, int> hash;
+        int tot = 0, ans = 0;
+        hash[0] = 1;
+        for(auto i : nums){
+            tot += i;
+            ans += hash[tot - k];
+            hash[tot] ++;
+        }
+        return ans;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -855,6 +868,13 @@ void test_448(){
     }
 }
 
+void test_560(){
+    Solution m_solution;
+    vector<int> nums = {1,1,1};
+    int ans = m_solution.subarraySum(nums, 2);
+    cout<<ans;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -931,7 +951,8 @@ int main(){
     // test_287();
     // test_289();
     // test_442();
-    test_448();
+    // test_448();
+    test_560();
     // test_1573();
     // test_1574();
     // test_1576();
