@@ -499,6 +499,27 @@ class Solution {
         return ans;
     }
 
+    // 565
+    int arrayNesting(vector<int>& nums) {
+        int n = nums.size();
+        vector<bool> vis(n, false);
+        int ans = 0, tmp_length = 0;
+        for(int i = 0; i < n; i++){
+            if(!vis[i]){
+                vis[i] = true;
+                tmp_length = 1;
+                int j = nums[i];
+                while(j != i){
+                    vis[j] = true;
+                    tmp_length ++;
+                    j = nums[j];
+                }
+                ans = max(ans, tmp_length);
+            }
+        }
+        return ans;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -875,6 +896,13 @@ void test_560(){
     cout<<ans;
 }
 
+void test_565(){
+    Solution m_solution;
+    vector<int> nums = {5,4,0,3,1,6,2};
+    int ans = m_solution.arrayNesting(nums);
+    cout<<ans;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -952,7 +980,8 @@ int main(){
     // test_289();
     // test_442();
     // test_448();
-    test_560();
+    // test_560();
+    test_565();
     // test_1573();
     // test_1574();
     // test_1576();
