@@ -520,6 +520,25 @@ class Solution {
         return ans;
     }
 
+    // 566
+    vector<vector<int>> matrixReshape(vector<vector<int>>& nums, int r, int c) {
+        int m = nums.size(), n = nums[0].size();
+        if(n*m != r*c) return nums;
+        vector<vector<int>> ans(r, vector<int>(c));
+        int t_i = 0, t_j = 0;
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                ans[t_i][t_j] = nums[i][j];
+                t_j++;
+                if(t_j == c){
+                    t_i++;
+                    t_j = 0;
+                }
+            }
+        }
+        return ans;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -903,6 +922,18 @@ void test_565(){
     cout<<ans;
 }
 
+void test_566(){
+    Solution m_solution;
+    vector<vector<int>> nums = {{1,2}, {3,4}};
+    vector<vector<int>> ans = m_solution.matrixReshape(nums, 1, 4);
+    for(int i = 0; i < ans.size(); i++){
+        for(int j = 0; j < ans[i].size(); j++){
+            cout<<ans[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -981,7 +1012,8 @@ int main(){
     // test_442();
     // test_448();
     // test_560();
-    test_565();
+    // test_565();
+    test_566();
     // test_1573();
     // test_1574();
     // test_1576();
