@@ -539,6 +539,17 @@ class Solution {
         return ans;
     }
 
+    // 581
+    int findUnsortedSubarray(vector<int>& nums) {
+        vector<int> temp;
+        temp.assign(nums.begin(), nums.end());
+        sort(temp.begin(), temp.end());
+        int n = nums.size(),  left = 0, right = n - 1;
+        while(left < n && nums[left] == temp[left]) left++;
+        while(right >= left && nums[right] == temp[right]) right--;
+        return right - left + 1;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -934,6 +945,13 @@ void test_566(){
     }
 }
 
+void test_581(){
+    Solution m_solution;
+    vector<int>nums = {2,6,4,8,10,9,15};
+    int ans = m_solution.findUnsortedSubarray(nums);
+    cout<<ans;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -1013,7 +1031,8 @@ int main(){
     // test_448();
     // test_560();
     // test_565();
-    test_566();
+    // test_566();
+    test_581();
     // test_1573();
     // test_1574();
     // test_1576();
