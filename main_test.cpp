@@ -540,7 +540,7 @@ class Solution {
     }
 
     // 581
-    int findUnsortedSubarray(vector<int>& nums) {
+    int findUnsortedSubarray_V1(vector<int>& nums) {
         vector<int> temp;
         temp.assign(nums.begin(), nums.end());
         sort(temp.begin(), temp.end());
@@ -548,6 +548,20 @@ class Solution {
         while(left < n && nums[left] == temp[left]) left++;
         while(right >= left && nums[right] == temp[right]) right--;
         return right - left + 1;
+    }
+    int findUnsortedSubarray(vector<int>& nums) {
+        int n = nums.size(), left = 0, right = n - 1;
+        if(n == 1) return 0;
+        while(left < n - 1 && nums[left + 1] >= nums[left]) left++;
+        while(right > left && nums[right] >= nums[right - 1]) right--;
+        if(left == right) return 0;
+        for(int i = left + 1; i < n; i++){
+            while(left >= 0 && nums[i] < nums[left]) left--;
+        }
+        for(int i = right - 1; i >= 0; i--){
+            while(right < n && nums[i] > nums[right]) right++;
+        }
+        return right - left - 1;
     }
 
     // 1573 组合数学 插板法
