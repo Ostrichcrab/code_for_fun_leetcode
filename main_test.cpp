@@ -564,6 +564,22 @@ class Solution {
         return right - left - 1;
     }
 
+    // 611
+    int triangleNumber(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size(), ans = 0;
+        for(int i = 0; i < n; i++){
+            if(nums[i] > 0){
+                int k = i + 1;
+                for(int j = i + 1; j < n; j++){
+                    while(k < n && nums[i] + nums[j] > nums[k]) k++;
+                    ans += k - j - 1;
+                }
+            }
+        }
+        return ans;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -966,6 +982,13 @@ void test_581(){
     cout<<ans;
 }
 
+void test_611(){
+    Solution m_solution;
+    vector<int> nums = {2,2,3,4};
+    int ans = m_solution.triangleNumber(nums);
+    cout<<ans;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -1046,7 +1069,8 @@ int main(){
     // test_560();
     // test_565();
     // test_566();
-    test_581();
+    // test_581();
+    test_611();
     // test_1573();
     // test_1574();
     // test_1576();
