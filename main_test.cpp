@@ -6,6 +6,7 @@
 #include<map>
 #include<unordered_map>
 #include<limits.h>
+#include<queue>
 using namespace std;
 typedef long long LL;
 const int INF = 1e9;
@@ -580,6 +581,43 @@ class Solution {
         return ans;
     }
 
+    // 621 贪心+堆
+    int leastInterval(vector<char>& tasks, int n) {
+        vector<int> cnt(26, 0);
+        for(char t : tasks){
+            cnt[t - 'A'] ++;
+        }
+        priority_queue<int> q;
+        for(int i = 0; i < 26; i++){
+            if(cnt[i] > 0){
+                q.push(cnt[i]);
+            }
+        }
+        int ans = 0;
+        while(1){
+            vector<int> tmp;
+            for(int i = 1; i <= n+1; i++){
+                if(!q.empty()){
+                    tmp.push_back(q.top() - 1);
+                    q.pop();
+                }
+            }
+            for(int t : tmp){
+                if(t > 0){
+                    q.push(t);
+                }
+            }
+            if (q.empty()){
+                ans += tmp.size();
+                break;
+            }
+            else{
+                ans += n+1;
+            }
+        }
+        return ans;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -989,6 +1027,13 @@ void test_611(){
     cout<<ans;
 }
 
+void test_621(){
+    Solution m_solution;
+    vector<char> tasks = {'A', 'A', 'A', 'B', 'B', 'B'};
+    int ans = m_solution.leastInterval(tasks, 2);
+    cout<<ans;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -1070,7 +1115,8 @@ int main(){
     // test_565();
     // test_566();
     // test_581();
-    test_611();
+    // test_611();
+    test_621();
     // test_1573();
     // test_1574();
     // test_1576();
