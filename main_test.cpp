@@ -618,6 +618,15 @@ class Solution {
         return ans;
     }
 
+    // 628
+    int maximumProduct(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int ans = -9999999999;
+        int n = nums.size();
+        ans = max(nums[0] * nums[1] * nums[n-1], nums[n-1]*nums[n-2]*nums[n-3]);
+        return ans;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -1034,6 +1043,13 @@ void test_621(){
     cout<<ans;
 }
 
+void test_628(){
+    Solution m_solution;
+    vector<int> nums = {1,2,3,4};
+    int ans = m_solution.maximumProduct(nums);
+    cout<<ans;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -1116,7 +1132,8 @@ int main(){
     // test_566();
     // test_581();
     // test_611();
-    test_621();
+    // test_621();
+    test_628();
     // test_1573();
     // test_1574();
     // test_1576();
