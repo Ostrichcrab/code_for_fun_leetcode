@@ -810,7 +810,7 @@ class Solution {
         return ans;
     }
 
-    // 5548 dp
+    // 5548 error solution
 int n,g[110][110],q[11000];
 bool inq[11000];
 int next[4][2]={{-1,0},{1,0},{0,-1},{0,1}};
@@ -852,38 +852,16 @@ bool OK(int s,int len)
 	if(inq[n*n-1]) return true;
 	return false;
 }
-int main()
-{
-	int i,j,s,l,r,mid;
-	while(scanf("%d",&n)!=EOF)
-	{
-		for(i=0;i<n;i++)
-			for(j=0;j<n;j++)
-				scanf("%d",&g[i][j]);
-		l=0,r=111;
-		while(l<=r)
-		{
-			mid=(l+r)/2;
-			for(s=0;s+mid<=110;s++)
-			{
-				if(OK(s,mid))
-					break;
-			}
-			if(s+mid<=110)
-			{
-				i=mid;
-				r=mid-1;
-			}
-			else l=mid+1;
-		}
-		printf("%d\n",i);
-	}
-	return 0;
-}
 
     int minimumEffortPath(vector<vector<int>>& heights) {
         int i,j,s,l,r,mid;
         l=0,r=9999999;
+        int n = heights.size(), m = heights[0].size();
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                g[i][j] = heights[i][j];
+            }
+        }
         while (l<=r)
         {
             mid=(l+r)/2;
@@ -900,7 +878,6 @@ int main()
 			else l=mid+1;
 		}
 		int ans = i;
-        
         
     return ans;
     }
