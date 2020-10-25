@@ -621,7 +621,7 @@ class Solution {
     // 628
     int maximumProduct(vector<int>& nums) {
         sort(nums.begin(), nums.end());
-        int ans = -9999999999;
+        LL ans = -9999999999;
         int n = nums.size();
         ans = max(nums[0] * nums[1] * nums[n-1], nums[n-1]*nums[n-2]*nums[n-3]);
         return ans;
@@ -764,6 +764,145 @@ class Solution {
             }
         int ans = prime(1, n);
         return ans;
+    }
+
+    // 5546
+    char slowestKey(vector<int>& releaseTimes, string keysPressed) {
+        int n = releaseTimes.size();
+        vector<LL> cost(n);
+        cost[0] = releaseTimes[0];
+        for(int i = 1; i < n; i++){
+            cost[i] = releaseTimes[i] - releaseTimes[i-1];
+        }
+        map<char, LL> count;
+        for(int i = 0; i < n; i++){
+            if(count[keysPressed[i]] < cost[i])
+            count[keysPressed[i]] = cost[i];
+        }
+        char ans = 'a'; LL c = 0;
+        for(auto item : count){
+            if(item.second >= c){
+                ans = item.first;
+                c = item.second;
+            }
+        }
+        
+        return ans;
+    }
+
+    // 5547
+    bool check(vector<int>& nums, int l, int r){
+        bool ans = true;
+        vector<int> tmp(nums.begin()+l, nums.begin()+r+1);
+        sort(tmp.begin(), tmp.end());
+        int interval = tmp[1]-tmp[0];
+        for(int i = 1; i < tmp.size(); i++){
+            if(tmp[i]-tmp[i-1] != interval) return false;
+        }
+        return true;
+    }
+    vector<bool> checkArithmeticSubarrays(vector<int>& nums, vector<int>& l, vector<int>& r) {
+        int m = l.size();
+        vector<bool> ans(m);
+        for(int i = 0; i < m; i++){
+            ans[i] = check(nums, l[i], r[i]); 
+        }
+        return ans;
+    }
+
+    // 5548 dp
+int n,g[110][110],q[11000];
+bool inq[11000];
+int next[4][2]={{-1,0},{1,0},{0,-1},{0,1}};
+bool IN(int now,int s,int len)
+{
+	if(now>=s&&now<=s+len) return true;
+	return false;
+}
+bool IsIN(int x,int y)
+{
+	if(x<0||x>=n) return false;
+	if(y<0||y>=n) return false;
+	return true;
+}
+bool OK(int s,int len)
+{
+	int head=0,tail=0,i,j,k,ii,jj;
+	memset(inq,false,sizeof(inq));
+	if(IN(g[0][0],s,len))
+	{
+		inq[0]=true;
+		q[tail++]=0;
+	}
+	while(head!=tail)
+	{
+		k=q[head++];
+		i=k/n,j=k%n;
+		for(k=0;k<4;k++)
+		{
+			ii=i+next[k][0];
+			jj=j+next[k][1];
+			if(IsIN(ii,jj)&&!inq[ii*n+jj]&&IN(g[ii][jj],s,len))
+			{
+				inq[ii*n+jj]=true;
+				q[tail++]=ii*n+jj;
+			}
+		}
+	}
+	if(inq[n*n-1]) return true;
+	return false;
+}
+int main()
+{
+	int i,j,s,l,r,mid;
+	while(scanf("%d",&n)!=EOF)
+	{
+		for(i=0;i<n;i++)
+			for(j=0;j<n;j++)
+				scanf("%d",&g[i][j]);
+		l=0,r=111;
+		while(l<=r)
+		{
+			mid=(l+r)/2;
+			for(s=0;s+mid<=110;s++)
+			{
+				if(OK(s,mid))
+					break;
+			}
+			if(s+mid<=110)
+			{
+				i=mid;
+				r=mid-1;
+			}
+			else l=mid+1;
+		}
+		printf("%d\n",i);
+	}
+	return 0;
+}
+
+    int minimumEffortPath(vector<vector<int>>& heights) {
+        int i,j,s,l,r,mid;
+        l=0,r=9999999;
+        while (l<=r)
+        {
+            mid=(l+r)/2;
+			for(s=0;s+mid<=110;s++)
+			{
+				if(OK(s,mid))
+					break;
+			}
+			if(s+mid<=110)
+			{
+				i=mid;
+				r=mid-1;
+			}
+			else l=mid+1;
+		}
+		int ans = i;
+        
+        
+    return ans;
     }
 };
 
@@ -1101,6 +1240,24 @@ void test_1584(){
     cout<<ans<<endl;
 }
 
+void test_5546(){
+    Solution m_solution;
+    vector<int> releaseTimes = {9,29,49,50};
+    string keysPressed = "cbcd";
+    char ans = m_solution.slowestKey(releaseTimes, keysPressed);
+    cout<<ans;
+}
+
+void test_5547(){
+    Solution m_solution;
+    vector<int> nums = {4,6,5,9,3,7};
+    vector<int> l = {0,0,2};
+    vector<int> r = {2,3,5};
+    vector<bool> ans = m_solution.checkArithmeticSubarrays(nums, l, r);
+    for(int i = 0; i <ans.size(); i++)
+    cout<<ans[i]<<" ";
+}
+
 int main(){
     cout<<"hello leetcode"<<endl;
     // test_57();
@@ -1133,7 +1290,7 @@ int main(){
     // test_581();
     // test_611();
     // test_621();
-    test_628();
+    // test_628();
     // test_1573();
     // test_1574();
     // test_1576();
@@ -1141,5 +1298,7 @@ int main(){
     // test_1578();
     // test_1582();
     // test_1584();
+    // test_5546();
+    test_5547();
     return 0;
 }
