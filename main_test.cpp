@@ -7,6 +7,7 @@
 #include<unordered_map>
 #include<limits.h>
 #include<queue>
+#include<string.h>
 using namespace std;
 typedef long long LL;
 const int INF = 1e9;
@@ -627,6 +628,22 @@ class Solution {
         return ans;
     }
 
+    // 643
+    double findMaxAverage(vector<int>& nums, int k) {
+        int n = nums.size();
+        double ans = -INF, temp = 0;
+        int i = 0, j = 0;
+        for(; j < k; j++) {
+            temp += nums[j];
+        }
+        ans = max(ans, temp);
+        for(; j < n; j++,i++){
+            temp = temp - nums[i] + nums[j];
+            ans = max(ans, temp);
+        }
+        return ans*1.0/k;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -1166,6 +1183,13 @@ void test_628(){
     cout<<ans;
 }
 
+void test_643(){
+    Solution m_solution;
+    vector<int>nums = {1,12,-5,-6,50,3};
+    double ans = m_solution.findMaxAverage(nums, 4);
+    cout<<ans;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -1268,6 +1292,7 @@ int main(){
     // test_611();
     // test_621();
     // test_628();
+    test_643();
     // test_1573();
     // test_1574();
     // test_1576();
@@ -1276,6 +1301,6 @@ int main(){
     // test_1582();
     // test_1584();
     // test_5546();
-    test_5547();
+    // test_5547();
     return 0;
 }
