@@ -8,6 +8,7 @@
 #include<limits.h>
 #include<queue>
 #include<string.h>
+#include<string>
 using namespace std;
 typedef long long LL;
 const int INF = 1e9;
@@ -644,6 +645,37 @@ class Solution {
         return ans*1.0/k;
     }
 
+    // 670
+    int maximumSwap(int num) {
+        string s = to_string(num);
+        int n = s.length();
+        int t = -1;
+        for(int i = 1; i < n; i++){
+            if(s[i] > s[i-1]){
+                t = i;
+                break;
+            }
+        }
+        if(t == -1) return num;
+        int maxx = t;
+        for(int i = t; i < n; i++){
+            if(s[i] >= s[maxx]){
+                maxx = i;
+            }
+        }
+        for(int i = 0; i < n; i++){
+            if(s[i] < s[maxx]){
+                swap(s[i], s[maxx]);
+                break;
+            }
+        }
+        int ans = 0;
+        for(int i = 0; i < n; i++){
+            ans = ans * 10 + s[i] - '0';
+        }
+        return ans;
+    }
+
     // 1573 组合数学 插板法
     int numWays(string s) {
         int n = s.size(), ones = 0;
@@ -1190,6 +1222,14 @@ void test_643(){
     cout<<ans;
 }
 
+void test_670(){
+    Solution m_solution;
+    int num = 2736;
+    // int num = 9973;
+    int ans = m_solution.maximumSwap(num);
+    cout<<ans;
+}
+
 void test_1573(){
     Solution m_solution;
     string s = "10101";
@@ -1292,7 +1332,8 @@ int main(){
     // test_611();
     // test_621();
     // test_628();
-    test_643();
+    // test_643();
+    test_670();
     // test_1573();
     // test_1574();
     // test_1576();
